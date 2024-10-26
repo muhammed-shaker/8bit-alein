@@ -22,11 +22,19 @@ let player = null;
 const FRUITS = [];
 const SCORE = new scoreTraker(ctx);
 
-Loader.asset("playerGraphics", "./images/player.png");
-Loader.asset("apple", "./images/apple.png");
-Loader.asset("grapes", "./images/grapes.png");
-Loader.asset("strawbary", "./images/strawbary.png");
-Loader.asset("charries", "./images/charries.png");
+Loader.asset("playerGraphics", "./assets/images/player.png");
+Loader.asset("apple", "./assets/images/apple.png");
+Loader.asset("grapes", "./assets/images/grapes.png");
+Loader.asset("strawbary", "./assets/images/strawbary.png");
+Loader.asset("charries", "./assets/images/charries.png");
+
+const coinEffect = new Audio("./assets/sounds/coin.wav");
+coinEffect.volume = 0.5;
+
+const backgroundMusic = new Audio("./assets/sounds/background.mp3");
+backgroundMusic.volume = .8;
+backgroundMusic.loop = true;
+backgroundMusic.play();
 
 
 Loader.onload = () =>{
@@ -78,6 +86,7 @@ function collisionHandler(){
             const newFruit = getRandomFruit();
             FRUITS.push(new Apple(ctx, Loader.get(newFruit)));
             SCORE.increase();
+            coinEffect.play();
         }
     });
 }
@@ -102,22 +111,17 @@ function mainloop(){
     requestAnimationFrame(mainloop);
 }
 
+const socket = new WebSocket("ws://192.168.27.10:8000");
+socket.addEventListener('open', () => {
+    socket.send(JSON.stringify({requestType: "init", sender: "game"}));
+});
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+socket.onmessage = message =>{
+    const data = JSON.parse(message.data);
+    Keyboard.keys[data.key] = data.stat;
+    
+    
+}
 
 
 
