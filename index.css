@@ -4,9 +4,19 @@
     box-sizing: border-box;
 }
 
-#canvas{
-    width: 100vw;
+body{
     height: 100vh;
-    background-color: #2B2A33;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #1e1e1e;
+}
+
+#canvas{
+    width: 600px;
+    height: 548px;
+    background-color: #212121;
+    border: 1px solid #a0a0a0;
+    border-radius: 4px;
 }
 
