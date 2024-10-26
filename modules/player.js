@@ -16,8 +16,12 @@ export default class Player{
     }
     
     move(h, v){
-        this.x += h;
-        this.y += v;
+        if(!(this.x + h < 0 || this.x + h > 600 - 50)){ 
+            this.x += h;
+        }
+        if(!(this.y + v < 0 || this.y + v >  548 - 50)){ 
+            this.y += v;
+        }
     }
 
     render(){
