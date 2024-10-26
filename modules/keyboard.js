@@ -3,7 +3,7 @@ export default class Keyboard{
     static actions = []; 
     static record(context = window){
         context.addEventListener("keydown", event =>{
-            this.keys[event.code] = true;
+            this.keys[event.code] = true;            
         });
         
         context.addEventListener("keyup", event =>{
