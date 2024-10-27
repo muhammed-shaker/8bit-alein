@@ -78,7 +78,7 @@ Keyboard.on("KeyR", () =>{
 
 function collisionHandler(){
     const [playerX, playerY] = player.center();
-    const radius = player.width < player.height ? player.width : player.height; // radius of collision circel
+    const radius = player.width; // radius of collision circel
     FRUITS.forEach((fruit, index) =>{
         const distance = Math.sqrt((playerX - fruit.X) ** 2 + (playerY - fruit.Y) ** 2);
         if(distance < radius){
