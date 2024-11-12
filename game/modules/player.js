@@ -1,20 +1,28 @@
 export default class Player{
-    constructor(x, y, width, height, graphics, ctx){
-        this.X  = x; 
-        this.Y = y; // (X,Y) intial position : constants
+    constructor(nickname, character, identifier, context, graphics, x, y){
+
+        this.identifier = identifier;
+
+        this.nickname = nickname;
+        this.character = character;
+        this.score = 0;
+
         this.x = x;
         this.y = y;
-        this.width = width;
-        this.height = height;
+        this.socre = 0;
+        this.width = 50;
+        this.height = 50;
         this.graphics = graphics;
-        this.ctx = ctx;
+        this.ctx = context;
     }
 
-    home(){
-        this.x = this.X;
-        this.y = this.Y;
+    getProfile(){
+        return {
+            nickname: this.nickname,
+            character: this.character
+        }
     }
-    
+
     move(h, v){
         if(!(this.x + h < 0 || this.x + h > 600 - 50)){ 
             this.x += h;
@@ -25,6 +33,8 @@ export default class Player{
     }
 
     render(){
+        console.log("rendered");
+        
         this.ctx.drawImage(this.graphics, this.x, this.y, this.width, this.height);
     }
 

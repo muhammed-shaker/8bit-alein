@@ -3,12 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>8-BIT</title>
-    <link rel="stylesheet" href="index.css">
-    <link rel="shortcut icon" href="player.png" type="image/png">
+    <title>GEMO</title>
+    <link rel="stylesheet" href="assets/css/variabels.css">
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            background-color: var(--background-color);
+            color: var(--color-on-background);
+            font-family: var(--primary-font);
+        }
+
+        .container{
+            max-width: 980px;
+            margin-inline: auto;
+            padding-inline: 1em;
+        }
+
+        .gemo{
+            font-size: 6em;
+            letter-spacing: 8px;
+            margin-block: .4em;
+            text-align: center;
+        }
+
+        .btn{
+            width: 200px;
+            height: 48px;
+            display: block;
+            text-align: center;
+            margin-inline: auto;
+            background-color: var(--primary-color);
+            color: black;
+            border: none;
+            border-radius: 1em;
+            font: inherit;
+            padding: 1em;
+            margin-block-start: 1em;
+            font-size: small;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color .3s ease-in-out;
+            text-decoration: none;
+        }
+
+        .btn:hover{
+            background-color: hsl(223, 100%, 96%);
+        }
+        
+        .char-image{
+            max-width: 100px;
+            display: block;
+            margin-inline: auto;
+            transform: rotate(-8deg) translateY(22px);
+        }
+    </style>
 </head>
 <body>
-    <canvas id="canvas"></canvas>
-    <script src="index.js" type="module"></script>
+    <main class="container">
+        <h1 class="gemo">GE-MO</h1>
+        <img class="char-image" src="assets/characters/ano.png" alt="ano">
+        <a class="btn" href="./game" >Create A Game</a>
+        <a class="btn" href="./player" >Play - Connect Your Console</a>
+    </main>
+    <script>
+        const backgroundMusic = new Audio("./assets/sounds/background1.mp3");
+        backgroundMusic.loop = true;
+        backgroundMusic.play();
+    </script>
+    <script src="index.js"></script>
 </body>
 </html>

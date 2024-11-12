@@ -1,16 +1,18 @@
 export default class assetsLoader{
-    static assets = [];
-    static loaded = {};
+    constructor(){
+        this.assets = [];
+        this.loaded = {};
+    }
 
-    static asset(reference, source){
+    asset(reference, source){
         this.assets.push({reference, source});
     }
 
-    static get(reference){
+    get(reference){
         return this.loaded[reference];
     }
 
-    static #loadImage(reference, source){
+    #loadImage(reference, source){
         return new Promise((resolve, reject) =>{
             const image = new Image();
             image.onload = () =>{
@@ -26,7 +28,7 @@ export default class assetsLoader{
         });
     }
 
-    static loadAll(){
+    loadAll(){
         const promises = this.assets.map( asset => this.#loadImage(asset.reference, asset.source));
         Promise.all(promises).then(() => {
             if(this.onload){
@@ -39,6 +41,6 @@ export default class assetsLoader{
         });
     }
 
-    static onload = null;
-    static onerror = null;
+    onload = null;
+    onerror = null;
 }

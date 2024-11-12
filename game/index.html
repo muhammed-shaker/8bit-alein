@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEMO</title>
+    <link rel="stylesheet" href="../assets/css/variabels.css">
+    <link rel="stylesheet" href="../assets/css/game.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+
+
+
+</head>
+<body>
+    <canvas id="game"></canvas>
+    <div class="container" data-wrapper>
+        <div class="connection-queue">
+            <div class="player" data-profile>
+                <div class="avatar">
+                    <img src="../assets/images/player.png">
+                </div>
+                <p class="player-stat waiting">waiting..</p>
+            </div>
+            <div class="vs">VS</div>
+            <div class="player" data-profile>
+                <div class="avatar">
+                    <img src="../assets/images/player.png">
+                </div>
+                <p class="player-stat waiting">waiting..</p>
+            </div>
+        </div>
+        <div class="scan-qr">
+            <canvas id="qr-canvas"></canvas>
+            <p>Scan QR to connect your console</p>
+            <button class="btn" style="margin-top: 3em;" data-start-btn>Start</button>
+        </div>
+    </div>
+    <script src="game.js" type="module"></script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
+
+html{
+    color-scheme: dark;
+}
+
+body{
+    background-color: var(--background-color);
+    color: var(--color-on-background);
+    font-family: var(--primary-font);
+    padding: 1em;
+}
+
+.gemo{
+    font-size: 6em;
+    letter-spacing: 8px;
+    margin-block: 1em;
+    text-align: center;
+}
+
+
+input:not([type="radio"]){
+    background-color: transparent;
+    padding: 1em;
+    border: var(--border);
+    border-radius: 4px;
+    outline: none;
+    font: inherit;
+    color: inherit;
+    margin-top: 1em;
+    text-transform: uppercase;
+}
+
+input:not([type="radio"]):focus{
+    background-color: var(--active-background);
+    border-color: var(--active-border-color);
+}
+
+.btn{
+    background-color: var(--primary-color);
+    color: black;
+    border: none;
+    border-radius: 1em;
+    font: inherit;
+    padding: 1em;
+    margin-block-start: 1em;
+    font-size: small;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color .3s ease-in-out;
+}
+
+.btn:hover{
+    background-color: hsl(223, 100%, 96%);
+}
+
+.connect-console-btn{
+    max-width: fit-content;
+    display: flex;
+    align-items: center;
+    margin-inline: auto;
+}
+
+.connect-console-btn::after{
+    content: url('../images/qrcode-icon.svg');
+    width: 15px;
+    height: 15px;
+    margin-inline-start: 1em;
+}
+
+.player-profile{
+    max-width: 600px;
+    max-height: fit-content;
+    border: var(--border);
+    border-radius: 8px;
+    padding: 1em;
+    margin-inline: auto;
+}
+
+.player-profile .primary{
+    display: flex;
+    align-items: center;
+}
+
+.player-profile .primary .avatar .image{
+    max-width: 88px;
+    height: 88px;
+    background-color: hsla(0, 54%, 49%, 0.1);
+    padding: 5px;
+    border: var(--border);
+    border-radius: 4px;
+}
+
+.player-profile .primary .avatar .image{
+    max-width: 100%;
+    width: 80px;
+    height: 80px;
+    aspect-ratio: 1/1;
+}
+
+.player-profile .primary .nickname{
+    flex: 1;
+    margin-inline: 1em;
+    display: flex;
+    flex-direction: column;
+}  
+
+.player-profile .primary .nickname label{
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.player-profile .primary .nickname input{
+    width: fit-content;
+}
+
+.characters{
+    border: var(--border);
+    display: flex;
+    justify-content: space-around;
+    padding: 1em;
+    border-radius: 8px;
+    margin-block: 1em;
+}
+ 
+.characters .character{
+    width: 80px;
+    height: 80px;
+    border: var(--border);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.characters .character:has([name="character"]:checked){
+    background-color: var(--active-background);
+    border-color: var(--active-border-color);
+}
+
+.characters .character input{
+    width: 0;
+    height: 0;
+    appearance: none;
+}
+
+.characters .character img{
+    max-width: 100%;
+    width: 50px;
+    height: 50px;
+    aspect-ratio: 1/1;
+}
+
+
+.play-section{
+    margin-inline-start: 1em;
+    padding: 1em;
+    border: var(--border);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.qr-scaner{
+    position: absolute;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--background-color);
+    display: none;
+}
+
+.qr-reader{
+    width: 280px;
+    min-height: 380px;
+    height: fit-content;
+    overflow: hidden;
+    border-radius: 6px;
+    background-color: #000011;
+    outline: 1px solid white;
+    outline-offset: 4px;
+}
+
+.qr-reader video{
+    border-radius: 8px;
+}
+
+.qr-reader #qr-canvas{
+    display: none;
+}
+
+.qr-scaner .message{
+    margin-block: 1em;
+}

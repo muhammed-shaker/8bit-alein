@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Console</title>
+    <link rel="stylesheet" href="../assets/css/variabels.css">
+    <link rel="stylesheet" href="../assets/css/console.css">
+    <script src="https://cdn.jsdelivr.net/npm/html5-qrcode/minified/html5-qrcode.min.js"></script>
+
+
+
+</head>
+<body>
+    <h1 class="gemo">GE-MO</h1>
+    <section class="player-profile" data-player-profile>
+        <div class="primary">
+            <div class="avatar">
+                <img class="image" src="../assets/characters/ano.png" alt="avatar" data-avatar>
+            </div>
+            <div class="nickname">
+                <label for="nickname">nickname</label>
+                <input type="text" id="nickname" value="ali-ho" maxlength="10">
+            </div>
+            <button class="btn connect-console-btn" data-connect-console-btn>
+                Connect Console
+            </button>
+        </div>
+        <div class="characters">
+            <label class="character" for="ano" title="ano">
+                <input type="radio" name="character" id="ano" value="ano" checked>
+                <img src="../assets/characters/ano.png" alt="ano">
+            </label>
+            <label class="character" for="deed" title="deed">
+                <input type="radio" name="character" id="deed" value="deed">
+                <img src="../assets/characters/deed.png" alt="deed">
+            </label>
+            <label class="character" for="jah">
+                <input type="radio" name="character" id="jah" value="jah">
+                <img src="../assets/characters/jah.png" alt="jah">
+            </label>
+            <label class="character" for="naho">
+                <input type="radio" name="character" id="naho" value="naho">
+                <img src="../assets/characters/naho.png" alt="naho">
+            </label>
+        </div>
+    </section>
+    <section class="qr-scaner" data-qr-scaner>
+        <div id="qr-reader" class="qr-reader" data-qr-reader></div>
+        <p class="message">scan QR</p>
+
+        <h1 class="gemo">GEMO</h1>        
+    </section>
+    <script src="console.js"></script>
+</body>
+</html>
