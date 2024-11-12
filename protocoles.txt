@@ -1,0 +1,22 @@
+game init 
+   request code: 100
+   responses: 
+       200 : game initialized
+       201 : game already initialized 
+connect console
+   request code: 101
+   responses:
+       300: console connected successfully 
+		body [to game]: nickname, avatar, character, control_identifier
+       301: game not found
+       302: incorrect password  
+       	 
+action
+    
+
+invalid request code : 000
+
+
+
+# Game Side  
+400: player conncected
