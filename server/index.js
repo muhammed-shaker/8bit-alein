@@ -42,25 +42,30 @@ wss.on("connection", ws =>{
                 const Game_Identifier = request.body.token;
                 if(GAMES.has(Game_Identifier)){
                     const Game = GAMES.get(Game_Identifier);
-                    const {nickname, character} = request.body;
+                    if(Game.players.size < 2){
+                        const {nickname, character} = request.body;
 
-                    const Player_Identifier = Generate_Identifier(); 
-                    const Action_Identifier  =  Generate_Identifier(); 
+                        const Player_Identifier = Generate_Identifier(); 
+                        const Action_Identifier  =  Generate_Identifier(); 
 
-                    console.log(`# Console connected to ${Game_Identifier}`);
-                    console.log(`# nickname: ${nickname}  - ${character}`);
-                    
-                    Game.players.set(Player_Identifier, new Player(Action_Identifier, Game));
-                    Game.host.send(JSON.stringify({code: 400, body:{Action_Identifier,nickname, character}}));
-                    ws.send(JSON.stringify({code: 300, body:{Player_Identifier}}));
-
-                    ws.on("close", () =>{
-                        console.log("Player not connected");
+                        console.log(`# Console connected to ${Game_Identifier}`);
+                        console.log(`# nickname: ${nickname}  - ${character}`);
                         
-                        Game.players.delete(Player_Identifier);
-                        Game.host.send(JSON.stringify({code: 401, body:{Action_Identifier}}));       
-                    });
+                        Game.players.set(Player_Identifier, new Player(Action_Identifier, Game));
+                        Game.host.send(JSON.stringify({code: 400, body:{Action_Identifier,nickname, character}}));
+                        ws.send(JSON.stringify({code: 300, body:{Player_Identifier}}));
 
+                        ws.on("close", () =>{
+                            console.log("Player not connected");
+                            
+                            Game.players.delete(Player_Identifier);
+                            Game.host.send(JSON.stringify({code: 401, body:{Action_Identifier}}));       
+                        });
+
+                    } else{
+                        console.log("Can't join the game");
+                    }
+                    
 
                 } else{
                     console.log("# Game not found");
