@@ -16,13 +16,6 @@ export default class Player{
         this.ctx = context;
     }
 
-    getProfile(){
-        return {
-            nickname: this.nickname,
-            character: this.character
-        }
-    }
-
     move(h, v){
         if(!(this.x + h < 0 || this.x + h > 600 - 50)){ 
             this.x += h;
@@ -32,10 +25,36 @@ export default class Player{
         }
     }
 
-    render(){
-        console.log("rendered");
-        
+    render(){       
         this.ctx.drawImage(this.graphics, this.x, this.y, this.width, this.height);
+    }
+
+    renderProfile(x, y){
+        this.ctx.fillStyle = "#333";
+        this.ctx.beginPath();
+        this.ctx.moveTo(x + 10, y);
+        this.ctx.lineTo(x + 180 - 10, y);
+        this.ctx.quadraticCurveTo(x + 180, y, x + 180, y + 10);
+        this.ctx.lineTo(x + 180, y + 48 - 10);
+        this.ctx.quadraticCurveTo(x + 180, y + 48, x + 180 - 10, y + 48);
+        this.ctx.lineTo(x + 10, y + 48);
+        this.ctx.quadraticCurveTo(x, y + 48, x, y + 48 - 10);
+        this.ctx.lineTo(x, y + 10);
+        this.ctx.quadraticCurveTo(x, y, x + 10, y);
+        this.ctx.closePath();
+        this.ctx.fill();
+
+        this.ctx.drawImage(this.graphics, x + 5, y + 10, 30, 30); 
+
+        this.ctx.fillStyle = "#FFF";
+        this.ctx.font = "13px Arial";
+        this.ctx.fillText(this.nickname.toUpperCase(), x + 45, y + 18); 
+
+
+        this.ctx.fillStyle = "#FFD700"; 
+        this.ctx.font = "12px monospace";
+        this.ctx.fillText(`Score: ${this.score}`, x + 55, y + 38); 
+
     }
 
     position(){
