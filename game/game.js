@@ -2,7 +2,6 @@ import assetsLoader from "./modules/loader.js";
 import Keyboard from "./modules/keyboard.js";
 import Player from "./modules/player.js";
 import Fruit from "./modules/fruit.js";
-import scoreTraker from "./modules/score.js";
 import { generate_Token} from "./modules/utils.js";
 
 
@@ -41,7 +40,18 @@ class Game{
 
     render(){
         this.objects.forEach(object => object.render());
-        this.Players.forEach(player => player.render());
+        let order = 0;
+        this.Players.forEach(player =>{
+            order ++;
+            player.response();
+            player.render();
+
+            if(order === 1){
+                player.renderProfile(10, 10);
+            } else if(order === 2){
+                player.renderProfile(410, 10);
+            }
+        });
     }
 
     collisionHandler(){
@@ -65,16 +75,14 @@ class Game{
 
 const Mee = new Game();
 
-
 function mainloop(){
     ctx.clear();
-    Keyboard.apply();
+    Mee.render();
     requestAnimationFrame(mainloop);
 }
 
-
 // Music
-const backgroundMusic = new Audio("../assets/sounds/background1.mp3");
+const backgroundMusic = new Audio("../assets/sounds/background2.mp3");
 backgroundMusic.loop = true;
 backgroundMusic.play();
 
@@ -103,58 +111,63 @@ function initilize(){
 
 const profiles = document.querySelectorAll("[data-profile]");
 
-initilize().then(message =>{
-    console.log(message);
-    const qr = new QRious({
-        element: document.getElementById('qr-canvas'),
-        value: token,
-        size: 138,
-        background: '#FFFFFF',
-        foreground: '#141D2E',
-    });
-
-    socket.addEventListener("message", message =>{
-        const response = JSON.parse(message.data);        
-        switch (response.code){
-            case 400:
-                if(Mee.Players.size < 2){
-                    const {Action_Identifier: identifier,nickname, character} = response.body;
-                    Mee.Players.set(identifier, new Player(nickname, character, identifier, ctx, Loader.get(character), 0, 0));
-                    renderConnectedPlayers();
-                    if(Mee.Players.size === 2){
-                        notification("Players are ready, start the game")
+Loader.onload = function(){
+    initilize().then(message =>{
+        console.log(message);
+        const qr = new QRious({
+            element: document.getElementById('qr-canvas'),
+            value: token,
+            size: 138,
+            background: '#FFFFFF',
+            foreground: '#141D2E',
+        });
+    
+        socket.addEventListener("message", message =>{
+            const request = JSON.parse(message.data);        
+            switch (request.code){
+                case 400:
+                    if(Mee.Players.size < 2){
+                        const {Action_Identifier: identifier,nickname, character} = request.body;
+                        Mee.Players.set(identifier, new Player(nickname, character, identifier, ctx, Loader.get(character), 100, 100));
+                        renderConnectedPlayers();
+                        if(Mee.Players.size === 2){
+                            notification("Players are ready, start the game");
+                        }
+                        notification(`${nickname} has connected`);
                     }
-                    notification(`${nickname} has connected`);
-                }
-                break;
-            case 401: 
-                Mee.Players.delete(response.body.Action_Identifier);
-                const stat = document.querySelector(`[data-access="${response.body.Action_Identifier}"]`).lastElementChild;
-                stat.classList.remove("connected");
-                stat.classList.add("not-connected");
-                stat.textContent = "Disconnected";
-                notification(`Player has disconnected`);
+                    break;
+                case 401: 
+                    Mee.Players.delete(request.body.Action_Identifier);
+                    const stat = document.querySelector(`[data-access="${request.body.Action_Identifier}"]`).lastElementChild;
+                    stat.classList.remove("connected");
+                    stat.classList.add("not-connected");
+                    stat.textContent = "Disconnected";
+                    notification(`Player has disconnected`);
 
-                startButton.disabled = true;
+                case 402:
+                    const {action, value} = request.body.action;
+                    Mee.Players.get(request.body.control_identifier).actions[action] = value;                    
+                    break;    
 
-            default:
-                break;
-        }
+                default:
+                    break;
+            }
+        });
     });
-});
 
+    ctx.drawImage(Loader.get("ano"), 100, 100, 50, 50);
+}
 
 function renderConnectedPlayers(){
     let index = 0;
     Mee.Players.forEach( player => {
-            const {nickname, character} = player.getProfile();
             if(profiles[index]){
                 profiles[index].dataset.access = player.identifier;
                 profiles[index].innerHTML =
                     `<div class="avatar">
-                        <img src="../assets/characters/${character}.png">
+                        <img src="../assets/characters/${player.character}.png">
                     </div>
-                    <div class="nickname">${nickname}</div>
+                    <div class="nickname">${player.nickname}</div>
                     <p class="player-stat connected">Connected</p>`;
             }
             index ++;
@@ -164,10 +177,9 @@ function renderConnectedPlayers(){
 // Start The Game 
 const startButton = document.querySelector("[data-start-btn]");
 startButton.addEventListener("click", () =>{
-    if(Mee.Players.size === 2){
+    if(Mee.Players.size === 2){                
         document.querySelector("[data-wrapper]").remove();
-        canvas.style.display = "block";
-        Mee.render();
+        mainloop();
     } else{
         notification(`Can not start the game with ${Mee.Players.size} player`)
     }
@@ -188,3 +200,6 @@ function notification(messsage){
 
     snackbarContainer.appendChild(snackbar);
 }
+
+
+Loader.loadAll();

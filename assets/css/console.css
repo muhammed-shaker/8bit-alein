@@ -204,3 +204,45 @@ input:not([type="radio"]):focus{
 .qr-scaner .message{
     margin-block: 1em;
 }
+
+
+/* Console  */
+.console{
+    position: absolute;
+    inset: 0;
+    display: none;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 1em 8em;
+}
+
+[data-console-action-btn]{
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background-color: hsl(0, 0%, 100%);
+    color: hsl(240, 100%, 3%);
+    border: none;
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+}
+
+[data-console-action-btn]::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    background-color: rgba(31, 42, 71, 0.3);
+    transition: opacity .1s linear;
+}
+  
+[data-console-action-btn]:active::before {
+    opacity: 1;
+}
+
+.vertical-actions button{
+    display: block;
+    margin-block: 1em;
+}
+

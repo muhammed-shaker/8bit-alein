@@ -1,7 +1,7 @@
 export default class Fruit{
     constructor(ctx, graphics){
         this.X = Math.random() * 600 - 10;
-        this.Y = Math.random() * 538 - 10;
+        this.Y = Math.random() * 538 - 160;
         this.graphics = graphics;
         this.context = ctx;
     }

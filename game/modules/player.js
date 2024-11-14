@@ -14,6 +14,8 @@ export default class Player{
         this.height = 50;
         this.graphics = graphics;
         this.ctx = context;
+
+        this.actions = {r: false, l: false, u: false, d: false};
     }
 
     move(h, v){
@@ -27,6 +29,13 @@ export default class Player{
 
     render(){       
         this.ctx.drawImage(this.graphics, this.x, this.y, this.width, this.height);
+    }
+
+    response(){
+        if(this.actions.r) this.move(5, 0);
+        if(this.actions.l) this.move(-5, 0);
+        if(this.actions.u) this.move(0, -5);
+        if(this.actions.d) this.move(0, 5);
     }
 
     renderProfile(x, y){

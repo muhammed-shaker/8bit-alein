@@ -53,7 +53,7 @@ wss.on("connection", ws =>{
                         
                         Game.players.set(Player_Identifier, new Player(Action_Identifier, Game));
                         Game.host.send(JSON.stringify({code: 400, body:{Action_Identifier,nickname, character}}));
-                        ws.send(JSON.stringify({code: 300, body:{Player_Identifier}}));
+                        ws.send(JSON.stringify({code: 300, body:{Player_Identifier, Game_Identifier}}));
 
                         ws.on("close", () =>{
                             console.log("Player not connected");
@@ -72,8 +72,13 @@ wss.on("connection", ws =>{
                 }
                 break;
 
+            case 102:
+                const {action, value} = request.body;
+                GAMES.get(request.body.GAME_IDENTIFIER).players.get(request.body.PLAYER_IDENTIFIER).action({action, value});
+                break;
+
             default:
-                ws.send({code: 203, body: {message: "invalid code request"}});
+                ws.send({code: 222, body: {message: "invalid code request"}});
                 break;
         } 
     });
@@ -100,7 +105,7 @@ class Player{
     }
 
     action(actionRequest){
-        game.send(JSON.stringify({control_identifier: this.control_identifier, action:actionRequest}));
+        this.game.host.send(JSON.stringify({code: 402, body:{control_identifier: this.control_identifier, action:actionRequest}}));
     }
 }
 
